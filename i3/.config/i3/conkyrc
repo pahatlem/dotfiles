@@ -1,0 +1,150 @@
+out_to_x no
+own_window no
+out_to_console yes
+background no
+max_text_width 0
+
+# Update interval in seconds
+update_interval 2.0
+
+# This is the number of times Conky will update before quitting.
+# Set to zero to run forever.
+total_run_times 0
+
+# Shortens units to a single character (kiB->k, GiB->G, etc.). Default is off.
+short_units yes
+
+# How strict should if_up be when testing an interface for being up?
+# The value is one of up, link or address, to check for the interface
+# being solely up, being up and having link or being up, having link
+# and an assigned IP address. 
+if_up_strictness address
+
+# Add spaces to keep things from moving about?  This only affects certain objects.
+# use_spacer should have an argument of left, right, or none
+use_spacer left
+
+# Force UTF8? note that UTF8 support required XFT
+override_utf8_locale no
+
+# number of cpu samples to average
+# set to 1 to disable averaging
+cpu_avg_samples 2
+# template {"full_text": "", "color":"\#"},
+
+# Stuff after 'TEXT' will be formatted on screen
+TEXT
+[
+#{"full_text": "\
+#${if_updatenr 1}host: ${exec hostname}${endif}\
+#${if_updatenr 2}kernel: ${exec /home/paul/bin/kernel-codename -a}${endif}\
+#${if_updatenr 3}distro: ${exec lsb_release -d -s | sed 's/"//g'} (${exec lsb_release -r -s})${endif}\
+#${if_updatenr 4}up: ${uptime}${endif}\
+#", "color":"\#DCDCCC"},
+
+{"full_text":" ","color":"\#d64937","separator":false,"separator_block_width":6},\
+{"full_text":"${execi 200 checkupdates | wc -l}","color":"\#808080","separator":false,"separator_block_width":15},
+
+#AUR
+{"full_text":" ","color":"\#d64937","separator":false,"separator_block_width":6},\
+{"full_text":"${execi 1900 cower -u | wc -l}","color":"\#808080","separator":false,"separator_block_width":15},\
+#KERNEL
+{"full_text":"","color":"\#d64937","separator":false,"separator_block_width":6},
+{"full_text": "${kernel}","color":"\#808080","separator":false,"separator_block_width":15},
+##################################
+##		MPD/MOPIDY				##
+##################################
+${if_mpd_playing} 
+    {"full_text":"", "color":"\#d64937", "separator":false, "separator_block_width":6},
+    {"full_text":"${mpd_artist 20}", "color" : "\#dca3a3", "separator" : false, "separator_block_width":3 },
+    {"full_text":" - ", "color" : "\#909737", "separator" : false, "separator_block_width":3 },
+    {"full_text":"${mpd_title 30}", "color" : "\#808080", "separator" : false, "separator_block_width":6 },
+	${else} 
+    {"full_text":"", "color":"\#c92525",
+     "separator" : false, "separator_block_width":6 },
+${endif}
+##################################
+##		IF WLAN UP				##
+##################################
+{"full_text": ${if_up wlp6s0} "", 
+            ${else}"",
+            ${endif}"separator":false,"separator_block_width":-5,"color":"\#d64937"},        
+{"full_text": ${if_up wlp6s0}"${wireless_link_qual_perc wlp6s0}% ${wireless_essid wlp6s0}", 
+            ${else}"",
+            ${endif}"color":"\#83b3a3"},           
+{"full_text": ${if_up wlp6s0} "${addr wlp6s0}",
+            ${else}"",
+            ${endif}"color":"\#dca3a3"},
+{"full_text": ${if_up wlp6s0} "", 
+            ${else}"",
+            ${endif}"separator":false,"separator_block_width":-5,"color":"\#d64937"},
+{"full_text": ${if_up wlp6s0} "${downspeedf wlp6s0}",
+            ${else}"",
+            ${endif}"color":"\#83b3a3"},
+{"full_text": ${if_up wlp6s0} "", 
+            ${else}"",
+            ${endif}"separator":false,"separator_block_width":-5,"color":"\#d64937"},
+{"full_text": ${if_up wlp6s0} "${upspeedf wlp6s0}",
+            ${else}"",
+            ${endif}"color":"\#83b3a3"},
+##################################
+##		IF ETH0 UP				##
+##################################
+{"full_text": ${if_up enp7s0} "",
+            ${else}"",
+            ${endif}"color":"\#d64937"},
+{"full_text": ${if_up enp7s0} "${addr enp7s0}",
+            ${else}"",
+            ${endif}"color":"\#dca3a3"},
+{"full_text": ${if_up enp7s0} "", 
+            ${else}"",
+            ${endif}"separator":false,"separator_block_width":-5,"color":"\#d64937"},
+{"full_text": ${if_up enp7s0} "${downspeedf enp7s0}",
+            ${else}"",
+            ${endif}"color":"\#83b3a3"},
+{"full_text": ${if_up enp7s0} "", 
+            ${else}"",
+            ${endif}"separator":false,"separator_block_width":-5,"color":"\#d64937"},
+{"full_text": ${if_up enp7s0} "${upspeedf enp7s0}",
+            ${else}"",
+            ${endif}"color":"\#83b3a3"},
+##################################
+##		RAM						##
+##################################
+{"full_text": "", "separator": false, "separator_block_width":3, "color":"\#d64937"},
+{"full_text": "${memperc}%", "min_width":"00%", "separator": false, "separator_block_width":3, "color":"${if_match ${memperc} < 33}\#7f9f7f${else}${if_match ${memperc} > 66}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+{"full_text": "${mem}/${memmax}", "color":"\#83b3a3"},
+##################################
+##		CPU						##
+##################################
+{"full_text": "", "separator": false, "separator_block_width":3, "separator_block_width":3, "color":"\#d64937"},
+{"full_text": "${cpu}%", "min_width":"00%", "separator": false, "separator_block_width":3, "color":"${if_match ${cpu} < 33}\#7f9f7f${else}${if_match ${cpu} > 66}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+{"full_text": "", "separator": false, "separator_block_width":3, "separator_block_width":3, "color":"\#d64937"},
+{"full_text": "${exec awk '{print $3}' /proc/loadavg}", "color":"${if_match ${exec awk '{print $3}' /proc/loadavg} < 1.0}\#7f9f7f${else}${if_match ${exec awk '{print $3}' /proc/loadavg} > 3.0}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+##################################
+##		CPU	TEMPERATURE			##
+##################################
+{"full_text": "", "separator": false, "separator_block_width":3, "separator_block_width":3, "color":"\#d64937"},
+{"full_text": "${execi 30 sensors | grep 'Core 0' | awk '{print $3}' | sed 's/+//' | sed 's/.0.*//'}°C", "color":"\#ffcfaf"},
+#Changing colours in realtion to temp
+#{"full_text": "${execi 30 sensors | grep 'Core 0' | awk '{print $3}' | sed 's/+//' | sed 's/.0.*//'}", "color":"${if_match ${exec awk '{print $3}' | sed 's/+//' | sed 's/.0.*//'} > 50},\#7f9f7f${else}${if_match ${exec awk '{print $3}' | sed 's/+//' | sed 's/.0.*//'} > 80}\#dca3a3${else}${if_match ${exec awk '{print $3}' | sed 's/+//' | sed 's/.0.*//'} > 90}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+##################################
+##		BATTERY					##
+##################################
+{"full_text": "", "separator": false, "separator_block_width":3, "separator_block_width":3, "color":"\#d64937"},
+{"full_text": "${battery_percent BAT0}%", "min_width":"000%", "color":"${if_match ${battery_percent BAT0} > 66}\#7f9f7f${else}${if_match ${battery_percent BAT0} < 33}\#dca3a3${else}\#c3bf9f${endif}${endif}"},
+##################################
+##		VOLUME					##
+##################################
+{"full_text":"",
+	"color":"\#d64937","separator":false,"separator_block_width":3},
+{"full_text":"${exec amixer -c 0 get Master | grep Mono: | cut -d " " -f6 | tr -d '[]'}",
+	"color":"\#7f9f7f","separator":false,"separator_block_width":15},
+##################################
+##		DATE AND TIME			##
+##################################
+{"full_text": "", "separator": false, "separator_block_width":3, "separator_block_width":3, "color":"\#d64937"},
+{"full_text": "${time %m.%d.%Y}", "separator": false, "separator_block_width":3, "color":"\#ffcfaf"},
+{"full_text": "", "separator": false, "separator_block_width":3, "separator_block_width":3, "color":"\#d64937"},
+{"full_text": "${time %H:%M}", "separator": false, "separator_block_width":3, "color":"\#ffcfaf"}
+],
