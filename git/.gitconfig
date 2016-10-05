@@ -1,0 +1,19 @@
+[user]
+	name = Pål Hatlem
+	email = pahatlem@gmail.com
+[core]
+	autocrlf = false
+	mergeoptions = --no-ff --no-commit
+[alias]
+	st = status
+	aa = add --all
+	l  = log
+	c  = commit
+	p  = push 
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+[push]
+	default = current 
