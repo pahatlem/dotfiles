@@ -18,7 +18,7 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
- font pango:open Sans Mono 8
+ font pango:Droid Sans Mono 8
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -27,10 +27,10 @@ floating_modifier $mod
 
 exec --no-startup-id feh --bg-fill ~/.config/i3/Background1.png
 exec --no-startup-id setxkbmap no
-exec --no-startup-id xset m 10 1
+exec --no-startup-id xset m 0 0
 exec --no-startup-id /usr/bin/dropbox
 exec --no-startup-id nm-applet
-
+exec --no-startup-id mopidy
 
 # start a terminal
 bindsym $mod+Return exec urxvt -e fish
@@ -44,7 +44,6 @@ bindsym $mod+Return exec urxvt -e fish
 #bindsym $mod+shift+F1 exec --no-startup-id scrot -q 100 -c -d 2 "/media/data/firefox/Scrot_%Y-%m-%d_%H:%M:%S.png"
 bindsym $mod+shift+F3 exec --no-startup-id geany ~/.config/i3/config
 bindsym $mod+shift+F11 exec --no-startup-id lxappearance
-bindsym $mod+shift+F12 exec --no-startup-id nitrogen --sort=rtime
 
 # kill focused window
 bindsym $mod+q kill

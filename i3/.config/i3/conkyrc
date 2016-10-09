@@ -144,7 +144,7 @@ ${endif}
 ##		DATE AND TIME			##
 ##################################
 {"full_text": "", "separator": false, "separator_block_width":3, "separator_block_width":3, "color":"\#d64937"},
-{"full_text": "${time %m.%d.%Y}", "separator": false, "separator_block_width":3, "color":"\#ffcfaf"},
+{"full_text": "${time %d.%m.%Y}", "separator": false, "separator_block_width":3, "color":"\#ffcfaf"},
 {"full_text": "", "separator": false, "separator_block_width":3, "separator_block_width":3, "color":"\#d64937"},
 {"full_text": "${time %H:%M}", "separator": false, "separator_block_width":3, "color":"\#ffcfaf"}
 ],
